@@ -1,5 +1,5 @@
 var expect = require('expect.js');
-var app = require('./../');
+var app = require('./../app');
 
 var helper = {
   port: 3021,
@@ -38,27 +38,39 @@ var helper = {
   }
 };
 
-describe('site', function() {
-  before(function(done) {
-    helper.start(app, done);
-  });
-
-  describe('GET /', function() {
+helper.get = function(path, cb) {
+  describe('GET ' + path, function() {
     before(function(done) {
+      console.log('here')
       var self = this;
-      helper.request('/', function(err, res) {
-        if(err) return done(err);
+      helper.request(path, function(err, res) {
         self.response = res;
-        done();
+        done(err);
       });
     });
+    var should = {
+      statusCode: function(code) {
+        it('should have statusCode ' + code, function() {
+          expect(this.response.statusCode).to.eql(code);
+        })
+      }
+    };
+    should.have = should;
+    should.be = should;
+    it.should = should;
+    cb(it);
+  });
+};
 
-    it('has statusCode 200', function() {
-      expect(this.response.statusCode).to.eql(200);
-    });
+describe('my app', function() {
+  before(function(done){
+    helper.start(app, done)
   });
 
-  after(function(done) {
-    helper.stop(done);
-  });
-});
+  helper.get('/', function(it) {
+    it.should.have.statusCode(200);
+  })
+
+  helper.get('/', function(res) {
+  })
+})
