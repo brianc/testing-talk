@@ -1,0 +1,19 @@
+{
+  "name": "testing-talk",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a talk for the austin node usergroup",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": "",
+  "author": "Brian M. Carlson",
+  "license": "BSD",
+  "dependencies": {
+    "mocha": "*",
+    "expect.js": "*",
+    "express": "*",
+    "jade": "*"
+  }
+}
