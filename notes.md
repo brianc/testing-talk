@@ -1,10 +1,13 @@
-all code vailable on githubs
+=== flow
+1. hello
+  a. first talk, thanks, happy
+  b. testing, mocha, web-focused but can be bent to other things
+  c. all code vailable on githubs https://github.com/brianc/testing-talk
+2. intro
+3. gotchas
+4. app
+
 1 npm init private
 mocha -R list
-jsDom
-further reading: tobi
+further reading: jsdom, tobi
 
-
-TODO: finish test/2/client.js for reference
-TODO: extend client again to use against existing URL
-TODO: test/3/index.js against bmc.io
