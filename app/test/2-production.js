@@ -12,5 +12,10 @@ client.test('http://bmc.io', function(app) {
     response.is.html();
     response.has.body('O hai!');
   });
+  
+  app.get('/index.css', function(response) {
+    response.has.statusCode(200);
+    response.is.css();
+  });
 
 });

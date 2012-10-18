@@ -2,14 +2,21 @@ var expect = require('expect.js');
 var Client = function(app) {
   this.app = app;
   this.port = 3212;
+  if(this.isRemote()) return;
   this.server = require('http').createServer(this.app);
 };
 
+Client.prototype.isRemote = function() {
+  return typeof this.app === 'string';
+}
+
 Client.prototype.start = function(cb) {
+  if(this.isRemote()) return cb();
   this.server.listen(this.port, cb);
 };
 
 Client.prototype.stop = function(cb) {
+  if(this.isRemote()) return cb();
   this.server.close(cb);
 };
 
@@ -22,6 +29,13 @@ Client.prototype.request = function(path, options, cb) {
   options.path = path;
   options.host = 'localhost';
   options.port = this.port;
+  if(this.isRemote()) {
+    var parts = require('url').parse(this.app + path);
+    options.path = parts.pathname;
+    options.host = parts.hostname;
+    options.port = parts.port;
+    options.query = parts.query;
+  }
   options.method = options.method || 'GET';
   var req = require('http').request(options, function(res) {
     res.body = '';
@@ -67,20 +81,23 @@ Client.prototype.get = function(path, cb) {
       statusCode: function(code) {
         it('has statusCode ' + code, function() {
           expect(this.response.statusCode).to.eql(code);
-        })
+        });
       },
-      html: function() {
-        it('has content-type text/html', function() {
-          expect(this.response.headers['content-type']).ok();
-          expect(this.response.headers['content-type'].indexOf('text/html')).eql(0);
-        })
+      header: function(name, val) {
+        it('has header "'+name+'" with value "'+val+'"', function() {
+          expect(this.response.headers[name]).ok();
+          expect(this.response.headers[name].indexOf(val) > -1).ok();
+        });
       },
       body: function(content) {
         it('has body content "'+content+'"', function() {
           expect(this.response.body.indexOf(content) > -1).ok();
-        })
+        });
       }
     };
+    should.contentType = should.header.bind(should, 'content-type');
+    should.css = should.contentType.bind(should, 'text/css');
+    should.html = should.contentType.bind(should, 'text/html');
     should.have = should;
     should.be = should;
     should.has = should;
