@@ -39,6 +39,29 @@ describe('site', function() {
     it('has content-type html', function() {
       expect(this.response.headers['content-type'].indexOf('text/html')).to.equal(0);
     });
+
+    it('has "O hai!" in the body"', function() {
+      expect(this.response.body.indexOf('O hai!')).eql(0);
+    });
+  });
+
+
+  describe('GET /index.css', function() {
+    before(function(done) {
+      var self = this;
+      site.request('/index.css', function(err, res) {
+        self.response = res;
+        done(err);
+      });
+    });
+
+    it('has 200 status code', function() {
+      expect(this.response.statusCode).eql(200);
+    });
+
+    it('is css', function() {
+      expect(this.response.headers['content-type'].indexOf('text/css')).eql(0);
+    });
   });
 });
 

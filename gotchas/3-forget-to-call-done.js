@@ -1,14 +1,14 @@
 
 describe('something awesome', function() {
-  before(function(done) {
+  it('is awesome', function(done) {
     process.nextTick(function() {
-      //done();
+      done();
     });
   });
 
-  it('is awesome', function() {
-    expect(1).to.eql(1);
-  });
+  it('never ends', function(done) {
+    //never calls done
+  })
 });
 
 //kind-of 'duh' but still easy to do

@@ -2,7 +2,7 @@ var expect = require('expect.js');
 
 describe('simple test', function() {
   it('is simple', function() {
-    expect(1).to.eql(1);
+    expect(1+1).to.eql(2);
   });
 
   describe('nested simple test', function() {
