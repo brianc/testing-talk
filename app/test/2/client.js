@@ -74,6 +74,11 @@ Client.prototype.get = function(path, cb) {
           expect(this.response.headers['content-type']).ok();
           expect(this.response.headers['content-type'].indexOf('text/html')).eql(0);
         })
+      },
+      body: function(content) {
+        it('has body content "'+content+'"', function() {
+          expect(this.response.body.indexOf(content) > -1).ok();
+        })
       }
     };
     should.have = should;

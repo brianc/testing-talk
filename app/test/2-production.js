@@ -1,6 +1,3 @@
-//require the app we're testing
-var app = require('./../app');
-
 //require our client helper
 var client = require('./client');
 
@@ -8,7 +5,7 @@ var client = require('./client');
 var client = require('./2/client');
 
 //initialize our test client
-client.test(app, function(app) {
+client.test('http://bmc.io', function(app) {
 
   app.get('/', function(response) {
     response.has.statusCode(200);
