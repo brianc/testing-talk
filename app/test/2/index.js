@@ -7,22 +7,16 @@ var expect = require('expect.js');
 //require our client helper
 var client = require('./../client');
 
+//TODO delete this
+var client = require('./client');
+
 //initialize our test client
 client.test(app, function(app) {
 
-  app.get('/', function(it) {
-    it.should.have.statusCode(200);
-
-    it.should.be.html();
-
-    it('should have body contents', function() {
-      expect(this.response.body.indexOf('O hai!')).eql(0);
-    });
-  });
-
-  app.get('/index.css', function(it) {
-    it.should.have.statusCode(200);
-    it.should.be.css();
+  app.get('/', function(response) {
+    response.has.statusCode(200);
+    response.is.html();
+    response.has.body('O hai!');
   });
 
 });

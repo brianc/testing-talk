@@ -65,12 +65,12 @@ Client.prototype.get = function(path, cb) {
     });
     var should = {
       statusCode: function(code) {
-        it('should have statusCode ' + code, function() {
+        it('has statusCode ' + code, function() {
           expect(this.response.statusCode).to.eql(code);
         })
       },
       html: function() {
-        it('should have content-type text/html', function() {
+        it('has content-type text/html', function() {
           expect(this.response.headers['content-type']).ok();
           expect(this.response.headers['content-type'].indexOf('text/html')).eql(0);
         })
@@ -78,8 +78,10 @@ Client.prototype.get = function(path, cb) {
     };
     should.have = should;
     should.be = should;
-    it.should = should;
-    cb(it);
+    should.has = should;
+    should.is = should;
+    should.should = should;
+    cb(should);
   });
 };
 
